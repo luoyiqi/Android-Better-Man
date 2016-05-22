@@ -1,7 +1,9 @@
-package net.liang;
+package net.liang.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import net.liang.R;
 
 public class MainActivity extends AppCompatActivity {
 
