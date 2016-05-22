@@ -8,4 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <!-- 侧栏字体显示样式 -->
+    <style name="MenuItemTextViewStyle">
+        <item name="android:textColor">@color/nv_view_item_icon_color</item>
+        <item name="android:drawablePadding">@dimen/space_10</item>
+        <item name="android:textSize">@dimen/text_size_16</item>
+    </style>
+
 </resources>

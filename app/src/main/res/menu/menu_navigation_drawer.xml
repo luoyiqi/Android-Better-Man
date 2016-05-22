@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_item_quests"
+        android:checked="true"
+        android:icon="@drawable/drawer_menu_icon_quest_nor"
+        android:title="@string/menu_quests" />
+
+    <item
+        android:id="@+id/menu_item_opensoft"
+        android:checked="true"
+        android:icon="@drawable/drawer_menu_icon_opensoft_nor"
+        android:title="@string/menu_opensoft" />
+
+    <item
+        android:id="@+id/menu_item_blog"
+        android:checked="true"
+        android:icon="@drawable/drawer_menu_icon_blog_nor"
+        android:title="@string/menu_blog" />
+
+    <item
+        android:id="@+id/menu_item_gitapp"
+        android:checked="true"
+        android:icon="@drawable/drawer_menu_icon_gitapp_nor"
+        android:title="@string/gitapp" />
+
+    <item
+        android:id="@+id/nav_share"
+        android:checked="true"
+        android:icon="@drawable/drawer_menu_icon_setting_nor"
+        android:title="@string/menu_setting" />
+
+</menu>
