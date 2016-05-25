@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/drawer_layout"
     tools:context=".ui.MainActivity"
     tools:openDrawer="start">
 
@@ -19,6 +20,7 @@
         layout_height=:256dp 为toolbar下拉时的高度
                                             -->
         <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar_layout"
             android:layout_width="match_parent"
             android:layout_height="256dp"
             android:fitsSystemWindows="true"
