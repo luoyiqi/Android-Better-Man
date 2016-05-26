@@ -21,6 +21,8 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import net.liang.R;
+import net.liang.fragment.MainExploreFragment;
+import net.liang.fragment.MainMeFragment;
 import net.liang.fragment.MainNewsFragment;
 import net.liang.fragment.MainTweetFragment;
 
@@ -32,11 +34,14 @@ public class MainActivity extends AppCompatActivity {
     private FragmentTabHost mTabHost;
     private ViewPager mViewPager;
     private List<Fragment> mFragmentList;
-    private Class mClass[] = {MainNewsFragment.class,MainTweetFragment.class};
-    private Fragment mFragment[] = {new MainNewsFragment(),new MainTweetFragment()};
-    private String mTitles[] = {"综合","动弹"};
-    private int mImages[] = {R.drawable.tab_icon_new, R.drawable.tab_icon_tweet};
-
+    private Class mClass[] = {MainNewsFragment.class, MainTweetFragment.class, MainExploreFragment.class, MainMeFragment.class};
+    private Fragment mFragment[] = {new MainNewsFragment(), new MainTweetFragment(), new MainExploreFragment(), new MainMeFragment()};
+    private String mTitles[] = {"综合", "动弹", "发现", "我"};
+    private int mImages[] = {
+            R.drawable.tab_icon_new,
+            R.drawable.tab_icon_tweet,
+            R.drawable.tab_icon_explore,
+            R.drawable.tab_icon_me};
 
 
     @Override
@@ -49,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         initEvent();
 
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
-        if (appBarLayout!= null){
+        if (appBarLayout != null) {
             appBarLayout.setExpanded(false);    //
         }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -86,9 +91,10 @@ public class MainActivity extends AppCompatActivity {
         mTabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
         mTabHost.getTabWidget().setDividerDrawable(null);
 
-        for (int i = 0;i < mFragment.length;i++){
+        for (int i = 0; i < mFragment.length; i++) {
             TabHost.TabSpec tabSpec = mTabHost.newTabSpec(mTitles[i]).setIndicator(getTabView(i));
-            mTabHost.addTab(tabSpec,mClass[i],null);
+            //mTabHost.addTab(tabSpec,mClass[i],null);
+            mTabHost.addTab(tabSpec, mClass[i], null);
             mFragmentList.add(mFragment[i]);
             mTabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.WHITE);
         }
