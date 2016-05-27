@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
         initData();
         initView();
-        initEvent();
+        initTabs();
 
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
         if (appBarLayout != null) {
@@ -76,13 +76,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_activity_menu, menu);
-        return true;
+    private void initView() {
+
     }
 
-    private void initView() {
+    private void initTabs() {
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
 
@@ -110,21 +108,8 @@ public class MainActivity extends AppCompatActivity {
                 return mFragmentList.size();
             }
         });
-    }
 
-    private View getTabView(int index) {
-        View view = LayoutInflater.from(this).inflate(R.layout.item_main_tab, null);
-
-        ImageView image = (ImageView) view.findViewById(R.id.image);
-        TextView title = (TextView) view.findViewById(R.id.title);
-
-        image.setImageResource(mImages[index]);
-        title.setText(mTitles[index]);
-
-        return view;
-    }
-
-    private void initEvent() {
+        //监听viewpager和tabs
 
         mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
@@ -149,6 +134,31 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_activity_menu, menu);
+        return true;
+    }
+
+
+
+    private View getTabView(int index) {
+        View view = LayoutInflater.from(this).inflate(R.layout.item_main_tab, null);
+
+        ImageView image = (ImageView) view.findViewById(R.id.image);
+        TextView title = (TextView) view.findViewById(R.id.title);
+
+        image.setImageResource(mImages[index]);
+        title.setText(mTitles[index]);
+
+        return view;
+    }
+
+    private void initEvent() {
+
+
 
     }
 

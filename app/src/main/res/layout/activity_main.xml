@@ -54,18 +54,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/space_16"
+            android:layout_marginBottom="@dimen/space_60"
+            android:layout_marginRight="@dimen/space_16"
             android:src="@android:drawable/ic_dialog_email" />
 
 
-        <!-- FragmentTabhost + viewPager -->
+        <!-- viewPager -->
+        <include
+            android:id="@+id/main_content"
+            layout="@layout/content_main_viewpager"/>
 
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/view_pager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
+        <!-- FragmentTabhost -->
         <android.support.v4.app.FragmentTabHost
             android:id="@android:id/tabhost"
             android:layout_width="match_parent"
@@ -83,6 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize" />
         </android.support.v4.app.FragmentTabHost>
+
 
     </android.support.design.widget.CoordinatorLayout>
 
