@@ -32,10 +32,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private FragmentTabHost mTabHost;
-    private ViewPager mViewPager;
-    private List<Fragment> mFragmentList;
     private Class mClass[] = {MainNewsFragment.class, MainTweetFragment.class, MainExploreFragment.class, MainMeFragment.class};
-    private Fragment mFragment[] = {new MainNewsFragment(), new MainTweetFragment(), new MainExploreFragment(), new MainMeFragment()};
     private String mTitles[] = {"综合", "动弹", "发现", "我"};
     private int mImages[] = {
             R.drawable.tab_icon_new,
@@ -82,58 +79,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void initTabs() {
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
-        mViewPager = (ViewPager) findViewById(R.id.view_pager);
-
-        mFragmentList = new ArrayList<>();
-
-        mTabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
+        mTabHost.setup(this, getSupportFragmentManager(),android.R.id.tabcontent);
         mTabHost.getTabWidget().setDividerDrawable(null);
 
-        for (int i = 0; i < mFragment.length; i++) {
+        for (int i = 0; i < mClass.length; i++) {
             TabHost.TabSpec tabSpec = mTabHost.newTabSpec(mTitles[i]).setIndicator(getTabView(i));
-            //mTabHost.addTab(tabSpec,mClass[i],null);
             mTabHost.addTab(tabSpec, mClass[i], null);
-            mFragmentList.add(mFragment[i]);
             mTabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.WHITE);
         }
-
-        mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                return mFragmentList.get(position);
-            }
-
-            @Override
-            public int getCount() {
-                return mFragmentList.size();
-            }
-        });
-
-        //监听viewpager和tabs
-
-        mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
-            @Override
-            public void onTabChanged(String tabId) {
-                mViewPager.setCurrentItem(mTabHost.getCurrentTab());
-            }
-        });
-
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                mTabHost.setCurrentTab(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
     }
 
     @Override

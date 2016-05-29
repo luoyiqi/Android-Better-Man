@@ -15,6 +15,7 @@
         tools:context="com.xiecc.hugo.justweather.modules.ui.MainActivity">
 
         <!--
+        app:elevation="0dp" ToolBar下接TabLayout时，去阴影的解决办法
         layout_height=:256dp 为toolbar下拉时的高度
                                             -->
         <android.support.design.widget.AppBarLayout
@@ -22,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="256dp"
             android:fitsSystemWindows="true"
+            app:elevation="0dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <android.support.design.widget.CollapsingToolbarLayout
@@ -62,7 +64,7 @@
         <!-- viewPager -->
         <include
             android:id="@+id/main_content"
-            layout="@layout/content_main_viewpager"/>
+            layout="@layout/content_main_fragment"/>
 
         <!-- FragmentTabhost -->
         <android.support.v4.app.FragmentTabHost
