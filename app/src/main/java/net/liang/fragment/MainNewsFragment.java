@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,20 +19,19 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MainNewsFragment extends Fragment {
 
+
     private TabLayoutViewPagerAdapter adapter;
     private String[] tv_Titles;
     private List<Fragment> tab_fragments;
 
-
-    private TabLayout tab_title;
-    private ViewPager tab_viewpager;
+    private TabLayout tabTitle;
+    private ViewPager tabViewpager;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,17 +41,20 @@ public class MainNewsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_news, container, false);
-        tab_title = (TabLayout) view.findViewById(R.id.tab_title);
-        tab_viewpager = (ViewPager) view.findViewById(R.id.tab_viewpager);
 
+        tabTitle = (TabLayout) view.findViewById(R.id.tab_title);
+        tabViewpager = (ViewPager) view.findViewById(R.id.tab_viewpager);
         /** 初始化tabLayout */
         init_tab();
         return view;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
     private void init_tab() {
-
-
         tab_fragments = new ArrayList<>();
         tab_fragments.add(new NewsFragment());
         tab_fragments.add(new HotNewFragment());
@@ -62,12 +65,9 @@ public class MainNewsFragment extends Fragment {
         adapter = new TabLayoutViewPagerAdapter(getActivity().getSupportFragmentManager(),
                 tv_Titles,
                 tab_fragments);
-        tab_viewpager.setAdapter(adapter);
-        tab_title.setupWithViewPager(tab_viewpager);
+        tabViewpager.setAdapter(adapter);
+        tabTitle.setupWithViewPager(tabViewpager);
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-    }
+
 }

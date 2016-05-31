@@ -14,4 +14,9 @@
         <item name="android:textSize">@dimen/text_size_16</item>
     </style>
 
+    <!-- TabLayout 样式 -->
+    <style name="MyTabLayoutStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
+        <item name="tabIndicatorHeight">50dp</item>
+    </style>
+
 </resources>
