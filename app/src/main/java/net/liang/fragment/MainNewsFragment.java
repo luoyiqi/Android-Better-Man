@@ -62,7 +62,10 @@ public class MainNewsFragment extends Fragment {
         tab_fragments.add(new RecommendFragment());
 
         tv_Titles = getResources().getStringArray(R.array.news_viewpage_arrays);
-        adapter = new TabLayoutViewPagerAdapter(getActivity().getSupportFragmentManager(),
+
+        /** 解决 fragment 嵌套切换问题*/
+        //adapter = new TabLayoutViewPagerAdapter(getActivity().getSupportFragmentManager(),
+        adapter = new TabLayoutViewPagerAdapter(getChildFragmentManager(),
                 tv_Titles,
                 tab_fragments);
         tabViewpager.setAdapter(adapter);
