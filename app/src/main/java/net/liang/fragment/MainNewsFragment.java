@@ -69,6 +69,7 @@ public class MainNewsFragment extends Fragment {
                 tv_Titles,
                 tab_fragments);
         tabViewpager.setAdapter(adapter);
+        tabViewpager.setOffscreenPageLimit(4);//设置缓存页
         tabTitle.setupWithViewPager(tabViewpager);
     }
 
