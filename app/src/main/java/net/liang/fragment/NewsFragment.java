@@ -82,16 +82,17 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         //下拉刷新
         swipeRefresh.setOnRefreshListener(this);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         newsAdapter = new NewsAdapter(getContext());
         recyclerView.setAdapter(newsAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         //上拉加载
-        recyclerView.addOnScrollListener(new BaseRecyclerListener(){
+        recyclerView.addOnScrollListener(new BaseRecyclerListener(layoutManager,newsAdapter){
             @Override
-            public void onLoadMore(int currentPage) {
+            public void onLoadMore() {
                 listLoadMore();
             }
 
@@ -139,7 +140,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     public void listLoadMore(){
         //更新数据
-        pageIndex++;
+        pageIndex = pageIndex +1;
         upDataList();
     }
 

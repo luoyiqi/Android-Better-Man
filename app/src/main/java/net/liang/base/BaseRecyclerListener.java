@@ -2,6 +2,10 @@ package net.liang.base;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+
+import net.liang.adapter.NewsAdapter;
+import net.liang.bean.News;
 
 /**
  * Created by lianghuiyong on 2016/6/11.
@@ -10,9 +14,23 @@ public abstract class BaseRecyclerListener extends RecyclerView.OnScrollListener
     private static final int HIDE_THRESHOLD = 20;
     private int scrolledDistance = 0;
     private boolean controlsVisible = true;
+    LinearLayoutManager layoutManager;
+    BaseRecyclerAdapter newsAdapter;
+
+    public BaseRecyclerListener(LinearLayoutManager layoutManager, BaseRecyclerAdapter newsAdapter){
+        this.layoutManager = layoutManager;
+        this.newsAdapter = newsAdapter;
+    }
 
     @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
+
+        int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
+        if (lastVisibleItemPosition + 1 == newsAdapter.getItemCount()) {
+            //上拉到底部
+            onLoadMore();
+        }
+
         if (scrolledDistance > HIDE_THRESHOLD && controlsVisible) {
             onSlide();
             controlsVisible = false;
@@ -29,7 +47,8 @@ public abstract class BaseRecyclerListener extends RecyclerView.OnScrollListener
 
     }
 
-    public abstract void onLoadMore(int currentPage);
+    //上拉到底部加载更多接口
+    public abstract void onLoadMore();
 
     //上滑
     public abstract void onSlide();
