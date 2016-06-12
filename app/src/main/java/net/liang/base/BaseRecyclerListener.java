@@ -15,18 +15,18 @@ public abstract class BaseRecyclerListener extends RecyclerView.OnScrollListener
     private int scrolledDistance = 0;
     private boolean controlsVisible = true;
     LinearLayoutManager layoutManager;
-    BaseRecyclerAdapter newsAdapter;
+    BaseRecyclerAdapter baseAdapter;
 
-    public BaseRecyclerListener(LinearLayoutManager layoutManager, BaseRecyclerAdapter newsAdapter){
+    public BaseRecyclerListener(LinearLayoutManager layoutManager, BaseRecyclerAdapter baseAdapter){
         this.layoutManager = layoutManager;
-        this.newsAdapter = newsAdapter;
+        this.baseAdapter = baseAdapter;
     }
 
     @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
 
         int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
-        if (lastVisibleItemPosition + 1 == newsAdapter.getItemCount()) {
+        if (lastVisibleItemPosition + 1 == baseAdapter.getItemCount()) {
             //上拉到底部
             onLoadMore();
         }
