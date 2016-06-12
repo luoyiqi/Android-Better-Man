@@ -1,54 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
+    android:layout_height="match_parent">
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/coord"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        tools:context="com.xiecc.hugo.justweather.modules.ui.MainActivity">
+        android:fitsSystemWindows="true">
 
-        <!--
-        app:elevation="0dp" ToolBar下接TabLayout时，去阴影的解决办法
-        layout_height=:256dp 为toolbar下拉时的高度
-                                            -->
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="256dp"
-            android:fitsSystemWindows="true"
+            android:layout_height="wrap_content"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-            <android.support.design.widget.CollapsingToolbarLayout
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:contentScrim="?attr/colorPrimary"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
-
-                <ImageView
-                    android:id="@+id/banner"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fitsSystemWindows="true"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/header_main_back"
-                    app:layout_collapseMode="parallax"
-                    app:layout_collapseParallaxMultiplier="0.7" />
-
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    app:layout_collapseMode="pin"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-            </android.support.design.widget.CollapsingToolbarLayout>
+                android:layout_height="?attr/actionBarSize"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
         </android.support.design.widget.AppBarLayout>
+
+
+        <!-- viewPager -->
+        <include
+            android:id="@+id/main_content"
+            layout="@layout/content_main_fragment" />
+
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
@@ -58,12 +40,6 @@
             android:layout_marginBottom="@dimen/space_60"
             android:layout_marginRight="@dimen/space_16"
             android:src="@android:drawable/ic_dialog_email" />
-
-
-        <!-- viewPager -->
-        <include
-            android:id="@+id/main_content"
-            layout="@layout/content_main_fragment"/>
 
         <!-- FragmentTabhost -->
         <android.support.v4.app.FragmentTabHost
@@ -83,10 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize" />
         </android.support.v4.app.FragmentTabHost>
-
-
     </android.support.design.widget.CoordinatorLayout>
-
     <!--侧栏-->
     <!--layout_gravity = "start" : 左侧滑出
                          "right" : 右侧滑出
@@ -96,9 +69,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
         app:itemIconTint="@color/nv_view_item_icon_color"
         app:itemTextAppearance="@style/MenuItemTextViewStyle"
         app:menu="@menu/menu_navigation_drawer" />
 </android.support.v4.widget.DrawerLayout>
+

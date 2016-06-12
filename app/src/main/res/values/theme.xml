@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- 日间模式 -->
-    <style name="AppBaseTheme_Light" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppBaseTheme_Light" parent="AppTheme">
         <item name="colorPrimary">@color/day_colorPrimary</item>
         <item name="colorPrimaryDark">@color/day_colorPrimaryDark</item>
         <item name="android:textColorLink">#0b9a27</item>
@@ -21,7 +21,7 @@
     </style>
 
     <!-- 夜间模式 -->
-    <style name="AppBaseTheme_Night" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppBaseTheme_Night" parent="AppTheme">
         <item name="colorPrimary">@color/night_colorPrimary</item>
         <item name="colorPrimaryDark">@color/night_colorPrimaryDark</item>
         <item name="android:textColorLink">@color/night_colorPrimary</item>

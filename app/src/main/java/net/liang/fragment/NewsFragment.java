@@ -3,8 +3,13 @@ package net.liang.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTabHost;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -22,9 +27,8 @@ import net.liang.AppConstant;
 import net.liang.AppContext;
 import net.liang.R;
 import net.liang.adapter.NewsAdapter;
-import net.liang.base.BaseRecyclerLaodMoreListener;
+import net.liang.base.BaseRecyclerListener;
 import net.liang.bean.News;
-import net.liang.ui.MainActivity;
 import net.liang.utils.XMLRequest;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -56,6 +60,15 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView(view);
+
+        //一进入到页面刷新数据
+        swipeRefresh.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefresh.setRefreshing(true);
+            }
+        });
+        onRefresh();
     }
 
     private void initView(View view) {
@@ -73,13 +86,43 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         recyclerView.setHasFixedSize(true);
         newsAdapter = new NewsAdapter(getContext());
         recyclerView.setAdapter(newsAdapter);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         //上拉加载
-        recyclerView.setOnScrollListener(new BaseRecyclerLaodMoreListener(
-                    new LinearLayoutManager(getActivity())) {
+        recyclerView.addOnScrollListener(new BaseRecyclerListener(){
             @Override
             public void onLoadMore(int currentPage) {
                 listLoadMore();
+            }
+
+            @Override
+            public void onSlide() {
+                //Log.e(TAG,"onSlide 上滑");
+
+                FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+                CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
+                final int fabBottomMargin = lp.bottomMargin;
+                fab.animate()
+                        .translationY(fab.getHeight() + fabBottomMargin)
+                        .setInterpolator(new AccelerateInterpolator(2))
+                        .start();
+
+                FragmentTabHost tabHost = (FragmentTabHost) getActivity().findViewById(android.R.id.tabhost);
+                CoordinatorLayout.LayoutParams lpTab = (CoordinatorLayout.LayoutParams) tabHost.getLayoutParams();
+                final int tabHostBottomMargin = lpTab.bottomMargin;
+                tabHost.animate()
+                        .translationY(fab.getHeight() + tabHostBottomMargin)
+                        .setInterpolator(new AccelerateInterpolator(2))
+                        .start();
+            }
+
+            @Override
+            public void onDescent() {
+                //Log.e(TAG,"onDescent 下滑");
+                FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+                FragmentTabHost tabHost = (FragmentTabHost) getActivity().findViewById(android.R.id.tabhost);
+                fab.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
+                tabHost.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
             }
         });
     }
@@ -89,7 +132,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public void onRefresh() {
         //更新数据
         pageIndex = 0;
-        newsAdapter.clearItems();
+        //newsAdapter.clearItems();
         upDataList();
 
     }
@@ -115,18 +158,11 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                         //解析 XmlPullParser
                         try {
                             int type = response.getEventType();//此时返回0，也就是在START_DOCUMENT
-                            boolean isGetXmlData = false;
-                            int i = 0;
                             News news = null;
-
                             while (type!= XmlPullParser.END_DOCUMENT){
-
-
-                                //资讯实体类
                                 switch (type){
                                     case XmlPullParser.START_DOCUMENT:
                                         break;
-
                                     case XmlPullParser.START_TAG:
                                         switch (response.getName()){
                                             case "id":
@@ -198,11 +234,6 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     }
                 }
         );
-
-        Log.e(TAG,AppConstant.NEWS_HOST +
-                "&pageIndex=" + pageIndex +
-                "&catalog=" + catalog +
-                "&pageSize=" + pageSize);
         AppContext.getRequestQueue().add(xmlRequest);
     }
 }

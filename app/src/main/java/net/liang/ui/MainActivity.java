@@ -1,5 +1,6 @@
 package net.liang.ui;
 
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -31,6 +32,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    DrawerLayout drawer;
+    ActionBarDrawerToggle toggle;
     private FragmentTabHost mTabHost;
     private Class mClass[] = {MainNewsFragment.class, MainTweetFragment.class, MainExploreFragment.class, MainMeFragment.class};
     private String mTitles[] = {"综合", "动弹", "发现", "我"};
@@ -50,16 +53,14 @@ public class MainActivity extends AppCompatActivity {
         initView();
         initTabs();
 
-        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
-        if (appBarLayout != null) {
-            appBarLayout.setExpanded(false);    //
-        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.syncState();
+        drawer.setDrawerListener(toggle);
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -94,8 +95,6 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main_activity_menu, menu);
         return true;
     }
-
-
 
     private View getTabView(int index) {
         View view = LayoutInflater.from(this).inflate(R.layout.item_main_tab, null);
