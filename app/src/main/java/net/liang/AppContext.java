@@ -1,10 +1,10 @@
 package net.liang;
 
 import android.app.Application;
-import android.util.Log;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+
 
 /**
  * Created by lenovo on 2016/6/8.

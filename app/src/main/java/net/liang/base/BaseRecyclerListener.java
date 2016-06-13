@@ -2,10 +2,6 @@ package net.liang.base;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-
-import net.liang.adapter.NewsAdapter;
-import net.liang.bean.News;
 
 /**
  * Created by lianghuiyong on 2016/6/11.

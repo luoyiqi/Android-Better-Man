@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -21,7 +20,7 @@ import android.view.animation.DecelerateInterpolator;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
+import com.android.volley.error.VolleyError;
 
 import net.liang.AppConstant;
 import net.liang.AppContext;
@@ -100,7 +99,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             public void onSlide() {
                 //Log.e(TAG,"onSlide 上滑");
 
-                FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+          /*      FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
                 CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
                 final int fabBottomMargin = lp.bottomMargin;
                 fab.animate()
@@ -114,16 +113,16 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 tabHost.animate()
                         .translationY(fab.getHeight() + tabHostBottomMargin)
                         .setInterpolator(new AccelerateInterpolator(2))
-                        .start();
+                        .start();*/
             }
 
             @Override
             public void onDescent() {
                 //Log.e(TAG,"onDescent 下滑");
-                FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+           /*     FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
                 FragmentTabHost tabHost = (FragmentTabHost) getActivity().findViewById(android.R.id.tabhost);
                 fab.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
-                tabHost.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
+                tabHost.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();*/
             }
         });
     }
@@ -140,8 +139,8 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     public void listLoadMore(){
         //更新数据
-        pageIndex = pageIndex +1;
-        upDataList();
+        //pageIndex = pageIndex +1;
+        //upDataList();
     }
 
     void upDataList() {
@@ -231,7 +230,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        Log.d("LIANGHUIYONG","----------VolleyError---------");
                     }
                 }
         );

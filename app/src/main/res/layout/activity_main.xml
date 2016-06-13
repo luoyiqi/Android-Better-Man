@@ -17,11 +17,13 @@
             android:layout_height="wrap_content"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
+            <!--scroll单独使用，会出现toolbar停留在动画中间的效果，不是很好
+                配合snap使用可以解决这个问题-->
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_scrollFlags="scroll|enterAlways"
+                app:layout_scrollFlags="scroll|snap|enterAlways"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
         </android.support.design.widget.AppBarLayout>
 
@@ -31,22 +33,12 @@
             android:id="@+id/main_content"
             layout="@layout/content_main_fragment" />
 
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_marginBottom="@dimen/space_60"
-            android:layout_marginRight="@dimen/space_16"
-            android:src="@android:drawable/ic_dialog_email" />
-
         <!-- FragmentTabhost -->
         <android.support.v4.app.FragmentTabHost
             android:id="@android:id/tabhost"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end">
+            android:layout_gravity="bottom">
 
             <FrameLayout
                 android:id="@android:id/tabcontent"
@@ -59,6 +51,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize" />
         </android.support.v4.app.FragmentTabHost>
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="@dimen/space_60"
+            android:layout_marginRight="@dimen/space_16"
+            android:src="@android:drawable/ic_dialog_email" />
     </android.support.design.widget.CoordinatorLayout>
     <!--侧栏-->
     <!--layout_gravity = "start" : 左侧滑出
