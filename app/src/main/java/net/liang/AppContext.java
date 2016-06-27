@@ -15,7 +15,7 @@ public class AppContext extends Application {
 
     private static RequestQueue volleyQueue;
 
-    private static String NewsLink     =    "http://news-at.zhihu.com/api/4/news/latest/";     //热文链接
+    private static String NewsLink     =    "http://news-at.zhihu.com/api/4/news/latest";      //热文链接
     private static String NewsListLink =    "http://news.at.zhihu.com/api/4/news/before/";     //历史热文
 
     //获取对应新闻的评论数量,『赞』的数量...使用方式：NewInfo+"id"
