@@ -5,82 +5,53 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTabHost;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import net.liang.AppContext;
+import net.liang.AppManager;
 import net.liang.R;
+import net.liang.base.BaseAppCompatActivity;
 import net.liang.fragment.MainExploreFragment;
 import net.liang.fragment.MainMeFragment;
 import net.liang.fragment.MainNewsFragment;
 import net.liang.fragment.MainTweetFragment;
 
-public class MainActivity extends AppCompatActivity {
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
-    DrawerLayout drawer;
-    ActionBarDrawerToggle toggle;
-    private FragmentTabHost mTabHost;
+public class MainActivity extends BaseAppCompatActivity {
+
+    private ActionBarDrawerToggle toggle;
+
+    @Bind(R.id.toolbar) Toolbar toolbar;
+    @Bind(android.R.id.tabhost) FragmentTabHost tabhost;
+    @Bind(R.id.fab) FloatingActionButton fab;
+    @Bind(R.id.drawer_layout) DrawerLayout drawer;
+    @Bind(R.id.main_content) View main_context;
+
+
+    private long mExitTime = 0;
     private Class mClass[] = {MainNewsFragment.class, MainTweetFragment.class, MainExploreFragment.class, MainMeFragment.class};
-    private String mTitles[] = {"综合", "动弹", "发现", "我"};
+    private String mTitles[] = {"新闻", "推荐", "发现", "我"};
     private int mImages[] = {
             R.drawable.tab_icon_new,
             R.drawable.tab_icon_tweet,
             R.drawable.tab_icon_explore,
             R.drawable.tab_icon_me};
 
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        initData();
-        initView();
-        initTabs();
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        toggle.syncState();
-        drawer.setDrawerListener(toggle);
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        assert fab != null;
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-    }
-
-    private void initView() {
-
-    }
-
-    private void initTabs() {
-        mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
-        mTabHost.setup(this, getSupportFragmentManager(),android.R.id.tabcontent);
-        mTabHost.getTabWidget().setDividerDrawable(null);
-
-        for (int i = 0; i < mClass.length; i++) {
-            TabHost.TabSpec tabSpec = mTabHost.newTabSpec(mTitles[i]).setIndicator(getTabView(i));
-            mTabHost.addTab(tabSpec, mClass[i], null);
-            mTabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.WHITE);
-        }
-    }
+    protected int getLayoutId() {   return R.layout.activity_main; }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -100,14 +71,66 @@ public class MainActivity extends AppCompatActivity {
         return view;
     }
 
-    private void initEvent() {
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void initView() {
+        setSupportActionBar(toolbar);
+
+        toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
+        toggle.syncState();
+        drawer.addDrawerListener(toggle);
 
 
+        assert fab != null;
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null)
+                        .show();
+            }
+        });
+    }
 
+    @Override
+    public void initTabs() {
+        tabhost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
+        tabhost.getTabWidget().setDividerDrawable(null);
+
+        for (int i = 0; i < mClass.length; i++) {
+            TabHost.TabSpec tabSpec = tabhost.newTabSpec(mTitles[i]).setIndicator(getTabView(i));
+            tabhost.addTab(tabSpec, mClass[i], null);
+            tabhost.getTabWidget().getChildAt(i).setBackgroundColor(Color.WHITE);
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        //如果侧栏没退出，先退出侧栏
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else{
+            //showSnackbar(getBaseContext(),"再按一次退出程序");
+            // 判断两次点击的时间间隔（默认设置为2秒）
+            if ((System.currentTimeMillis() - mExitTime) > 2000) {
+                showSnackbar(main_context,"再按一次退出程序");
+                mExitTime = System.currentTimeMillis();
+            } else {
+                //关闭所有的activity
+                AppManager.getAppManager().finishAllActivity();
+                super.onBackPressed();
+            }
+            return super.onKeyDown(keyCode, event);
+        }
+        return true;
     }
 
 
-    private void initData() {
-
-    }
 }

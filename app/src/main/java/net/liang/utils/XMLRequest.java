@@ -1,9 +1,9 @@
 package net.liang.utils;
 
 import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.error.ParseError;
 import com.android.volley.toolbox.HttpHeaderParser;
 
 import org.xmlpull.v1.XmlPullParser;

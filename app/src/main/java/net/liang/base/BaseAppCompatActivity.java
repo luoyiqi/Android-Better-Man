@@ -1,48 +1,98 @@
 package net.liang.base;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
+import android.view.View;
 
+import com.orhanobut.logger.Logger;
+
+import net.liang.AppManager;
 import net.liang.R;
 
-import org.kymjs.kjframe.utils.StringUtils;
+import butterknife.ButterKnife;
 
 /**
  * Created by lenovo on 2016/5/25.
  * AppCompat风格
  */
-public class BaseAppCompatActivity extends AppCompatActivity {
+public abstract class BaseAppCompatActivity extends AppCompatActivity {
 
-    private Toolbar mtoolBar;
-
+    private long mExitTime = 0;
 
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(getLayoutId());
+        ButterKnife.bind(this);     //注解注册
+        Logger.init();
+        AppManager.getAppManager().addActivity(this);
 
-        mtoolBar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mtoolBar);
+        initData();
+        initView();
+        initTabs();
     }
 
-
-    public void setToolBarTitle(int resId) {
-        setToolBarTitle(getString(resId));
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
-    public void setToolBarTitle(String title) {
-        if (StringUtils.isEmpty(title)) {
-            title = getString(R.string.app_name);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);   //注解注销
+    }
+
+    public void showSnackbar(View view, String s) {
+        Snackbar sb =  Snackbar.make(view, s, Snackbar.LENGTH_SHORT);
+        sb.getView().setBackgroundColor(getResources().getColor(R.color.day_colorPrimary));
+//        sb.getView().setBackgroundColor(getResources().getColor(R.color.night_colorPrimary));
+        sb.show();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            // 判断两次点击的时间间隔（默认设置为2秒）
+            if ((System.currentTimeMillis() - mExitTime) > 2000) {
+               // showSnackbar(null,"再按一次退出程序");
+                mExitTime = System.currentTimeMillis();
+            } else {
+                //关闭所有的activity
+                AppManager.getAppManager().finishAllActivity();
+                super.onBackPressed();
+            }
+            return true;
         }
+        return super.onKeyDown(keyCode, event);
+    }
 
-        if (mtoolBar != null) {
-            mtoolBar.setTitle(title);
+/*
+    @Override
+    public void onBackPressed() {
+
+        // 判断两次点击的时间间隔（默认设置为2秒）
+        if ((System.currentTimeMillis() - mExitTime) > 2000) {
+            // showSnackbar(null,"再按一次退出程序");
+            mExitTime = System.currentTimeMillis();
+        } else {
+            //关闭所有的activity
+            AppManager.getAppManager().finishAllActivity();
+            super.onBackPressed();
         }
     }
+*/
 
-    public Toolbar getToolBar(){
-        return mtoolBar;
-    }
+    protected abstract void initData();
 
+    protected abstract void initView();
+
+    protected abstract void initTabs();
+
+    //绑定布局
+    protected abstract int getLayoutId();
 }

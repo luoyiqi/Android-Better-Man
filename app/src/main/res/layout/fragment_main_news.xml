@@ -1,9 +1,7 @@
-<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="net.liang.fragment.MainNewsFragment"
     android:orientation="vertical">
 
     <!--TabLayout 自定义样式 ：app:tabTextAppearance="@style/MyTabLayoutStyle"-->
@@ -17,8 +15,7 @@
 
     <android.support.v4.view.ViewPager
         android:id="@+id/tab_viewpager"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

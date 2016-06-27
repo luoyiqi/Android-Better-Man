@@ -3,10 +3,7 @@ package net.liang.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTabHost;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,17 +12,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.error.VolleyError;
+import com.android.volley.VolleyError;
 
 import net.liang.AppConstant;
 import net.liang.AppContext;
 import net.liang.R;
 import net.liang.adapter.NewsAdapter;
+import net.liang.base.BaseFragment;
 import net.liang.base.BaseRecyclerListener;
 import net.liang.bean.News;
 import net.liang.utils.XMLRequest;
@@ -39,7 +35,7 @@ import java.io.IOException;
  * 综合->资讯
  * A simple {@link Fragment} subclass.
  */
-public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class NewsFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private SwipeRefreshLayout swipeRefresh;
     private RecyclerView recyclerView;
