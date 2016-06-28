@@ -13,9 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
+import com.orhanobut.logger.Logger;
 
 import net.liang.AppConstant;
 import net.liang.AppContext;
@@ -26,6 +30,8 @@ import net.liang.base.BaseRecyclerListener;
 import net.liang.bean.News;
 import net.liang.utils.XMLRequest;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -140,96 +146,31 @@ public class NewsFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
     void upDataList() {
-        XMLRequest xmlRequest = new XMLRequest(Request.Method.GET, AppConstant.NEWS_HOST +
-                        "&pageIndex=" + pageIndex +
-                        "&catalog=" + catalog +
-                        "&pageSize=" + pageSize,
-                new Response.Listener<XmlPullParser>() {
-                    @Override
-                    public void onResponse(XmlPullParser response) {
 
-                        //获取到数据后把加载动画取消显示
-                        swipeRefresh.setRefreshing(false);
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("catalog",1);
+            jsonObject.put("pageIndex",0);
+            jsonObject.put("pageSize",20);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-                        //解析 XmlPullParser
-                        try {
-                            int type = response.getEventType();//此时返回0，也就是在START_DOCUMENT
-                            News news = null;
-                            while (type!= XmlPullParser.END_DOCUMENT){
-                                switch (type){
-                                    case XmlPullParser.START_DOCUMENT:
-                                        break;
-                                    case XmlPullParser.START_TAG:
-                                        switch (response.getName()){
-                                            case "id":
-                                                //初始化资讯实体类
-                                                news = new News();
-                                                news.setID(response.nextText());
-                                                break;
-                                            case "title":
-                                                if (news != null) {
-                                                    news.setTitle(response.nextText());
-                                                }
-                                                break;
-                                            case "body":
-                                                if (news != null) {
-                                                    news.setBody(response.nextText());
-                                                }
-                                                break;
-                                            case "commentCount":
-                                                if (news != null) {
-                                                    news.setCommentCount(response.nextText());
-                                                }
-                                                break;
-                                            case "author":
-                                                if (news != null) {
-                                                    news.setAuthor(response.nextText());
-                                                }
-                                                break;
-                                            case "pubDate":
-                                                if (news != null) {
-                                                    news.setTime(response.nextText());
-                                                }
-                                                break;
-                                            case "url":
-                                                if (news != null) {
-                                                    news.setUrl(response.nextText());
-                                                }
-                                                break;
-                                            case "type":
-                                                if (news != null) {
-                                                    news.setType(response.nextText());
-                                                }
-                                                break;
-                                            case "authoruid2":
-                                                if (news != null) {
-                                                    news.setAuthoruid2(response.nextText());
-                                                }
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET,"http://www.oschina.net/action/api/news_list",jsonObject,new Response.Listener<JSONObject>(){
 
-                                                //将实体类载入到适配器
-                                                newsAdapter.addItem(news);
-                                                break;
-                                        }
-                                        break;
-                                    case XmlPullParser.END_TAG:
-                                        break;
-                                }
-                                type = response.next();
-                            }
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                Logger.json(jsonObject.toString());
+            }
 
-                        } catch (XmlPullParserException | IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
 
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("LIANGHUIYONG","----------VolleyError---------");
-                    }
-                }
-        );
-        AppContext.getRequestQueue().add(xmlRequest);
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Logger.e("onError");
+            }
+        });
+
+        AppContext.getRequestQueue().add(jsonRequest);
     }
 }
