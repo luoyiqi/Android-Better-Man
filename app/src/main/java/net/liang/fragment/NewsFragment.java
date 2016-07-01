@@ -8,34 +8,25 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
 import com.orhanobut.logger.Logger;
 
-import net.liang.AppConstant;
 import net.liang.AppContext;
 import net.liang.R;
 import net.liang.adapter.NewsAdapter;
 import net.liang.base.BaseFragment;
 import net.liang.base.BaseRecyclerListener;
-import net.liang.bean.News;
-import net.liang.utils.XMLRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.IOException;
 
 /**
  * 综合->资讯
@@ -146,28 +137,21 @@ public class NewsFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
     void upDataList() {
-
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("catalog",1);
-            jsonObject.put("pageIndex",0);
-            jsonObject.put("pageSize",20);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET,"http://www.oschina.net/action/api/news_list",jsonObject,new Response.Listener<JSONObject>(){
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, AppContext.NewsLink, null,new Response.Listener<JSONObject>(){
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-                Logger.json(jsonObject.toString());
+                //获取到数据后把加载动画取消显示
+                swipeRefresh.setRefreshing(false);
+                //--------------------- 数据处理 ----------------------------
+
             }
 
 
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Logger.e("onError");
+                //Logger.e("onError");
             }
         });
 

@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.liang.R;
@@ -35,7 +36,7 @@ public class NewsAdapter extends BaseRecyclerAdapter<News> implements View.OnCli
         Holder holder = (Holder) viewHolder;
 
         holder.tv_title.setText(getItemData(position).getTitle());
-        holder.tv_body.setText(getItemData(position).getBody());
+        holder.tv_time.setText(getItemData(position).getTime());
     }
 
     @Override
@@ -45,11 +46,13 @@ public class NewsAdapter extends BaseRecyclerAdapter<News> implements View.OnCli
 
     private class Holder extends RecyclerView.ViewHolder {
         private TextView tv_title;
-        private TextView tv_body;
+        private TextView tv_time;
+        private ImageView tv_img;
         public Holder(View view) {
             super(view);
             tv_title = (TextView) view.findViewById(R.id.tv_title);
-            tv_body = (TextView) view.findViewById(R.id.tv_body);
+            tv_time = (TextView) view.findViewById(R.id.tv_time);
+            tv_img = (ImageView) view.findViewById(R.id.iv_img);
         }
     }
 }

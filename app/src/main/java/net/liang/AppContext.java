@@ -15,15 +15,15 @@ public class AppContext extends Application {
 
     private static RequestQueue volleyQueue;
 
-    private static String NewsLink     =    "http://news-at.zhihu.com/api/4/news/latest";      //热文链接
-    private static String NewsListLink =    "http://news.at.zhihu.com/api/4/news/before/";     //历史热文
+    public static String NewsLink     =    "http://news-at.zhihu.com/api/4/news/latest";      //热文链接
+    public static String NewsListLink =    "http://news.at.zhihu.com/api/4/news/before/";     //历史热文
 
     //获取对应新闻的评论数量,『赞』的数量...使用方式：NewInfo+"id"
-    private static String NewInfo      =    "http://news-at.zhihu.com/api/4/story-extra/";
+    public static String NewInfo      =    "http://news-at.zhihu.com/api/4/story-extra/";
 
     //热文对应长评论查看                 使用方式：NewStory+"/id"+"/long-comments"
     //热文对应短评论查看                 使用方式：NewStory+"/id"+"/short-comments"
-    private static String NewStory     =    "http://news-at.zhihu.com/api/4/story";
+    public static String NewStory     =    "http://news-at.zhihu.com/api/4/story";
 
     @Override
     public void onCreate() {
