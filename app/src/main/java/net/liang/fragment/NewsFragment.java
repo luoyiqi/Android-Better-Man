@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import net.liang.R;
 import net.liang.adapter.NewsAdapter;
 import net.liang.base.BaseFragment;
 import net.liang.base.BaseRecyclerListener;
+import net.liang.bean.News;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -125,7 +127,7 @@ public class NewsFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     public void onRefresh() {
         //更新数据
         pageIndex = 0;
-        //newsAdapter.clearItems();
+        newsAdapter.clearItems();
         upDataList();
 
     }
@@ -143,8 +145,39 @@ public class NewsFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             public void onResponse(JSONObject jsonObject) {
                 //获取到数据后把加载动画取消显示
                 swipeRefresh.setRefreshing(false);
-                //--------------------- 数据处理 ----------------------------
+                //--------------------- 数据处理 start ----------------------------
 
+                Logger.json(jsonObject.toString());
+
+/*                try {
+                    JSONArray jsonStories = jsonObject.getJSONArray("stories");
+                    JSONObject jsonStory;
+                    //历遍json数组
+                    for(int i=0; i<jsonStories.length(); i++){
+                        jsonStory = jsonStories.getJSONObject(i);
+
+                        Log.e("lianghuiyong",jsonStory.toString());
+
+                        News news = new News();
+                        news.setID(jsonStory.getString("id"));
+                        news.setType(jsonStory.getString("type"));
+                        news.setTime(jsonStory.getString("ga_prefix"));
+                        news.setImageUrl(jsonStory.getString("images"));
+                        news.setTitle(jsonStory.getString("title"));
+
+                        newsAdapter.addItem(news);
+
+                    }
+
+                    //Log.d("lianghuiyong",jsonStories.toString());
+                    //Logger.json(jsonStories.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }*/
+
+                //Logger.json(jsonObject.toString());
+
+                //--------------------- 数据处理  end  ----------------------------
             }
 
 
