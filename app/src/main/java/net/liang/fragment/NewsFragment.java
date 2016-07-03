@@ -3,7 +3,10 @@ package net.liang.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTabHost;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +15,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -29,6 +34,9 @@ import net.liang.bean.News;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
 
 /**
  * 综合->资讯
@@ -94,7 +102,7 @@ public class NewsFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             public void onSlide() {
                 //Log.e(TAG,"onSlide 上滑");
 
-          /*      FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+                FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
                 CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
                 final int fabBottomMargin = lp.bottomMargin;
                 fab.animate()
@@ -108,16 +116,16 @@ public class NewsFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 tabHost.animate()
                         .translationY(fab.getHeight() + tabHostBottomMargin)
                         .setInterpolator(new AccelerateInterpolator(2))
-                        .start();*/
+                        .start();
             }
 
             @Override
             public void onDescent() {
                 //Log.e(TAG,"onDescent 下滑");
-           /*     FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+                FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
                 FragmentTabHost tabHost = (FragmentTabHost) getActivity().findViewById(android.R.id.tabhost);
                 fab.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
-                tabHost.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();*/
+                tabHost.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
             }
         });
     }
@@ -139,55 +147,23 @@ public class NewsFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
     void upDataList() {
-        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, AppContext.NewsLink, null,new Response.Listener<JSONObject>(){
 
+        News news = new News();
+        news.setType("0");
+        news.setTime("2016-7-3");
+        news.setImageUrl("null");
+        news.setTitle("哈哈哈哈哈哈哈Hello World");
+        news.save(new SaveListener<String>() {
             @Override
-            public void onResponse(JSONObject jsonObject) {
-                //获取到数据后把加载动画取消显示
-                swipeRefresh.setRefreshing(false);
-                //--------------------- 数据处理 start ----------------------------
-
-                Logger.json(jsonObject.toString());
-
-/*                try {
-                    JSONArray jsonStories = jsonObject.getJSONArray("stories");
-                    JSONObject jsonStory;
-                    //历遍json数组
-                    for(int i=0; i<jsonStories.length(); i++){
-                        jsonStory = jsonStories.getJSONObject(i);
-
-                        Log.e("lianghuiyong",jsonStory.toString());
-
-                        News news = new News();
-                        news.setID(jsonStory.getString("id"));
-                        news.setType(jsonStory.getString("type"));
-                        news.setTime(jsonStory.getString("ga_prefix"));
-                        news.setImageUrl(jsonStory.getString("images"));
-                        news.setTitle(jsonStory.getString("title"));
-
-                        newsAdapter.addItem(news);
-
-                    }
-
-                    //Log.d("lianghuiyong",jsonStories.toString());
-                    //Logger.json(jsonStories.toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }*/
-
-                //Logger.json(jsonObject.toString());
-
-                //--------------------- 数据处理  end  ----------------------------
-            }
-
-
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                //Logger.e("onError");
+            public void done(String s, BmobException e) {
+                if (e == null){
+                    swipeRefresh.setRefreshing(false);
+                    showSnackbar(getView(),"ID = "+s);
+                }else {
+                    swipeRefresh.setRefreshing(false);
+                    showSnackbar(getView(),"ERROR = "+e.getMessage());
+                }
             }
         });
-
-        AppContext.getRequestQueue().add(jsonRequest);
     }
 }

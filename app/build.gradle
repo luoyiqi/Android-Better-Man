@@ -23,6 +23,15 @@ android {
     }
 }
 
+allprojects {
+
+    repositories {
+        jcenter()
+        //Bmob的maven仓库地址--必填
+        maven { url "https://raw.github.com/bmob/bmob-android-sdk/master" }
+    }
+}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
@@ -35,4 +44,18 @@ dependencies {
     compile 'com.zhy:percent-support-extends:1.1.1' // 百分比布局
     compile 'com.orhanobut:logger:1.13'             // log工具
     compile 'de.hdodenhof:circleimageview:2.0.0'    // 圆形头像
+
+
+    /**----------------------Bmob配置  start----------------------------*/
+    //bmob-sdk：Bmob的android sdk包，包含了Bmob的数据存储、文件等服务，以下是最新的bmob-sdk:
+    compile 'cn.bmob.android:bmob-sdk:3.5.0'
+
+    //bmob-im：Bmob的即时通讯包，注意每个版本的im依赖特定版本的bmob-sdk，具体的依赖关系可查看下面注释[2]
+    compile 'cn.bmob.android:bmob-im:2.0.5@aar'
+    compile 'cn.bmob.android:bmob-sdk:3.4.7-aar'
+
+    //如果你想应用能够兼容Android6.0，请添加此依赖(org.apache.http.legacy.jar)
+    compile 'cn.bmob.android:http-legacy:1.0'
+    /**----------------------Bmob配置   end ----------------------------*/
+
 }

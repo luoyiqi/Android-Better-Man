@@ -14,6 +14,7 @@ import net.liang.bean.News;
 public class AppContext extends Application {
 
     private static RequestQueue volleyQueue;
+    public static String BmobAppID = "932a407a2585f28302e4cef71f0b10b0";
 
     public static String NewsLink     =    "http://news-at.zhihu.com/api/4/news/latest";      //热文链接
     public static String NewsListLink =    "http://news.at.zhihu.com/api/4/news/before/";     //历史热文

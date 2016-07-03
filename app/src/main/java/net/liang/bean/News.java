@@ -1,9 +1,11 @@
 package net.liang.bean;
 
+import cn.bmob.v3.BmobObject;
+
 /**
  * Created by lianghuiyong on 2016/6/10.
  */
-public class News {
+public class News extends BmobObject{
     public String getID() {
         return ID;
     }
