@@ -44,6 +44,8 @@ dependencies {
     compile 'com.zhy:percent-support-extends:1.1.1' // 百分比布局
     compile 'com.orhanobut:logger:1.13'             // log工具
     compile 'de.hdodenhof:circleimageview:2.0.0'    // 圆形头像
+    compile 'de.greenrobot:eventbus:2.4.0'          // Eventbus
+
 
 
     /**----------------------Bmob配置  start----------------------------*/

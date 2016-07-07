@@ -5,7 +5,7 @@ import android.app.Application;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
-import net.liang.bean.News;
+import net.liang.bean.APPUser;
 
 
 /**
@@ -13,6 +13,7 @@ import net.liang.bean.News;
  */
 public class AppContext extends Application {
 
+    private static APPUser user;
     private static RequestQueue volleyQueue;
     public static String BmobAppID = "932a407a2585f28302e4cef71f0b10b0";
 
@@ -38,7 +39,15 @@ public class AppContext extends Application {
     private void init() {
         // 建立Volley的Http请求队列
         volleyQueue = Volley.newRequestQueue(getApplicationContext());
+
+        if (user == null){
+            user = new APPUser();
+        }
     }
+
+    public static APPUser getUser(){    return user;    }
+
+    public static void setUser(APPUser appUser){    user = appUser;    }
 
     //获取volley队列
     public static RequestQueue getRequestQueue() {

@@ -78,6 +78,9 @@ public class MainActivity extends BaseAppCompatActivity {
 
     @Override
     public void initView() {
+        AppManager.getAppManager().finishActivity(LoginActivity.class);
+        AppManager.getAppManager().finishActivity(RegisterActivity.class);
+
         setSupportActionBar(toolbar);
 
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -85,7 +88,6 @@ public class MainActivity extends BaseAppCompatActivity {
                 R.string.navigation_drawer_close);
         toggle.syncState();
         drawer.addDrawerListener(toggle);
-
 
         assert fab != null;
         fab.setOnClickListener(new View.OnClickListener() {
@@ -117,7 +119,6 @@ public class MainActivity extends BaseAppCompatActivity {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else{
-            //showSnackbar(getBaseContext(),"再按一次退出程序");
             // 判断两次点击的时间间隔（默认设置为2秒）
             if ((System.currentTimeMillis() - mExitTime) > 2000) {
                 showSnackbar(main_context,"再按一次退出程序");

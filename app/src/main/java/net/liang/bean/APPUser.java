@@ -5,26 +5,17 @@ import cn.bmob.v3.BmobObject;
 /**
  * Created by lianghuiyong on 2016/7/4.
  */
-public class _User extends BmobObject {
-    private String PhotoNumber;
-    private String Email;
+public class APPUser extends BmobObject {
+    private String PhoneNumber;
     private String Password;
     private String Username;
 
-    public String getPhotoNumber() {
-        return PhotoNumber;
+    public String getPhoneNumber() {
+        return PhoneNumber;
     }
 
-    public void setPhotoNumber(String photoNumber) {
-        PhotoNumber = photoNumber;
-    }
-
-    public String getEmail() {
-        return Email;
-    }
-
-    public void setEmail(String email) {
-        Email = email;
+    public void setPhoneNumber(String phoneNumber) {
+        PhoneNumber = phoneNumber;
     }
 
     public String getPassword() {
