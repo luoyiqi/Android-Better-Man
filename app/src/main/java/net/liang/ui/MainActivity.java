@@ -81,23 +81,11 @@ public class MainActivity extends BaseAppCompatActivity {
         AppManager.getAppManager().finishActivity(LoginActivity.class);
         AppManager.getAppManager().finishActivity(RegisterActivity.class);
 
-        setSupportActionBar(toolbar);
-
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
         toggle.syncState();
         drawer.addDrawerListener(toggle);
-
-        assert fab != null;
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null)
-                        .show();
-            }
-        });
     }
 
     @Override

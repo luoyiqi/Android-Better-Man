@@ -3,14 +3,10 @@ package net.liang.ui;
 import android.content.Intent;
 import android.support.design.widget.CoordinatorLayout;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import net.liang.AppContext;
-import net.liang.AppManager;
 import net.liang.R;
 import net.liang.base.BaseAppCompatActivity;
 import net.liang.bean.APPUser;

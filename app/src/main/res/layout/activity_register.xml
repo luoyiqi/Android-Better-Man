@@ -5,13 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/toolbar"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/space_16"
         android:layout_marginRight="@dimen/space_16"
         android:layout_marginLeft="@dimen/space_16"
-        android:layout_marginTop="@dimen/space_60"
+        android:layout_marginTop="90dp"
         android:orientation="vertical">
 
         <android.support.design.widget.TextInputLayout
